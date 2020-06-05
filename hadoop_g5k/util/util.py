@@ -71,10 +71,11 @@ def check_java_version(java_major_version, hosts):
 
     for p in tr.processes:
         match = re.match('.*[^.0-9]1\.([0-9]+).[0-9].*', p.stdout)
-        version = int(match.group(1))
-        if java_major_version > version:
-            msg = "Java 1.%d+ required" % java_major_version
-            return False
+        if match:
+            version = int(match.group(1))
+            if java_major_version > version:
+                msg = "Java 1.%d+ required" % java_major_version
+                return False
 
     return True
 
